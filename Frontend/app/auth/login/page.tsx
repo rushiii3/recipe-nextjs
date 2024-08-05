@@ -56,7 +56,7 @@ const Page = () => {
           </form>
           <div className="py-12 text-center">
             <p className="text-gray-600">
-              Don't have an account?
+              Dont have an account?
               <Link
                 href={'/auth/register'}
                 className="whitespace-nowrap font-semibold text-gray-900 underline underline-offset-4"
