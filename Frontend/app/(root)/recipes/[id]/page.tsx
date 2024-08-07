@@ -25,7 +25,7 @@ const Page = () => {
   return (
     <section className="py-12">
       <div className="container mx-auto flex flex-col md:flex-row mt-10 xl:container m-auto px-6 text-gray-600 md:px-12 xl:px-6">
-        <div className="w-full max-w-6xl mx-auto">
+        <div className="w-full max-w-xl lg:max-w-4xl mx-auto">
           <div className="flex justify-end items-center gap-5">
             <IoShareOutline className="size-7" />
             <IoBookmarkOutline className="size-7" />
