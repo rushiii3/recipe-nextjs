@@ -1,148 +1,217 @@
+"use client";
 import Ingredients from "@/components/Ingredients";
-import React from "react";
-import { IoShareOutline, IoBookmarkOutline } from "react-icons/io5";
-import { Chip } from "@nextui-org/react";
+import Image from "next/image";
+import React, { useRef } from "react";
+import {
+  IoShareOutline,
+  IoBookmarkOutline,
+  IoPrintOutline,
+} from "react-icons/io5";
+import { FaStar } from "react-icons/fa";
+import { useReactToPrint } from "react-to-print";
+import "./print.css";
+import Comments from "@/components/Comments";
+import TimeAgo from "javascript-time-ago";
+import en from "javascript-time-ago/locale/en";
+import {
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownItem,
+} from "@nextui-org/react";
+import {
+  FaFacebook,
+  FaTumblr,
+  FaReddit,
+  FaWhatsapp,
+  FaTelegram,
+} from "react-icons/fa";
+import { FaTwitter } from "react-icons/fa6";
+import { IoMail } from "react-icons/io5";
+TimeAgo.addDefaultLocale(en);
 const data = {
+  title: "Classic Spaghetti Carbonara",
+  description: "A quick and easy recipe for the classic Italian pasta dish.",
+  prepTime: "15 min",
+  cookTime: "20 min",
+  servings: "4 people",
   ingredients: [
     {
-      sectionName: "Crust",
+      sectionName: "Main Ingredients",
       items: [
         {
-          name: "Graham crackers",
-          quantity: "400g",
+          name: "Spaghetti",
+          quantity: "200g",
         },
         {
-          name: "Unsalted butter",
-          quantity: "150g, melted",
-        },
-      ],
-    },
-    {
-      sectionName: "Cheesecake",
-      items: [
-        {
-          name: "Marshmallows",
-          quantity: "300g",
+          name: "Pancetta",
+          quantity: "100g",
         },
         {
-          name: "Unsalted butter",
-          quantity: "175g, melted",
+          name: "Parmesan Cheese",
+          quantity: "50g",
         },
         {
-          name: "Philadelphia cream cheese",
-          quantity: "500g, softened",
+          name: "Eggs",
+          quantity: "2 large",
         },
         {
-          name: "Thickened/whipping cream",
-          quantity: "250ml, warm",
+          name: "Garlic",
+          quantity: "2 cloves",
         },
         {
-          name: "Powdered gelatin",
-          quantity: "3 tbsp",
+          name: "Olive Oil",
+          quantity: "2 tbsp",
         },
         {
-          name: "Water",
-          quantity: "3 tbsp",
-        },
-        {
-          name: "Purple food gel",
-          quantity: "5 drops",
-        },
-        {
-          name: "Blue food gel",
-          quantity: "3 drops",
+          name: "Black Pepper",
+          quantity: "to taste",
         },
       ],
     },
   ],
-};
-const steps = {
   steps: [
     {
       stepNumber: 1,
-      instruction:
-        "Add graham crackers to a food processor and process until you reach fine crumbs. Add melted butter and pulse 3-4 times to coat crumbs with butter.",
+      instruction: "Cook the spaghetti in salted boiling water until al dente.",
     },
     {
       stepNumber: 2,
       instruction:
-        "Pour mixture into a 20cm (8”) tart tin. Use the back of a spoon to firmly press the mixture out across the bottom and sides of the tart tin. Chill for 30 min.",
+        "In a pan, sauté pancetta with olive oil until crispy. Add minced garlic and cook for a minute.",
     },
     {
       stepNumber: 3,
       instruction:
-        "Add the marshmallows and melted butter into a microwave safe bowl. Microwave for 30 seconds and mix to combine. Set aside.",
+        "In a bowl, beat the eggs and mix in grated Parmesan cheese.",
     },
     {
       stepNumber: 4,
       instruction:
-        "Add the gelatine and water to a small mixing bowl and mix to combine. Microwave for 30 seconds.",
+        "Drain the spaghetti and add it to the pan with pancetta. Remove the pan from heat.",
     },
     {
       stepNumber: 5,
       instruction:
-        "Add the cream cheese to the marshmallow mixture and use a hand mixer or stand mixer fitted with a paddle attachment to mix until smooth.",
-    },
-    {
-      stepNumber: 6,
-      instruction:
-        "Add the warm cream and melted gelatin mixture and mix until well combined.",
-    },
-    {
-      stepNumber: 7,
-      instruction:
-        "Add 1/3 of the mixture to a mixing bowl, add purple food gel and mix until well combined. Colour 1/3 of the mixture blue. Split the remaining mixture into two mixing bowls, colour one pink and leave the other white.",
-    },
-    {
-      stepNumber: 8,
-      instruction:
-        "Pour half the purple cheesecake mixture into the chill tart crust. Add half the blue and then add the remaining purple and blue in the tart tin. Use a spoon to drizzle some pink cheesecake on top. Use a skewer or the end of a spoon to swirl the pink. Add some small dots of the plain cheesecake mixture to create stars and then sprinkle some more stars on top before chilling for 2 hours.",
-    },
-    {
-      stepNumber: 9,
-      instruction: "Slice with a knife to serve.",
+        "Quickly stir in the egg and cheese mixture, tossing until the spaghetti is well coated. Add black pepper to taste.",
     },
   ],
-};
-const facts = {
   nutritionFacts: [
     {
       name: "Calories",
-      quantity: "219.9",
+      quantity: "450 kcal",
     },
     {
       name: "Total Fat",
-      quantity: "10.7 g",
+      quantity: "20 g",
     },
     {
       name: "Saturated Fat",
-      quantity: "2.2 g",
+      quantity: "5 g",
     },
     {
       name: "Cholesterol",
-      quantity: "37.4 mg",
+      quantity: "150 mg",
     },
     {
       name: "Sodium",
-      quantity: "120.3 mg",
+      quantity: "800 mg",
     },
     {
       name: "Potassium",
-      quantity: "32.8 mg",
+      quantity: "250 mg",
     },
     {
       name: "Total Carbohydrate",
-      quantity: "22.3 g",
+      quantity: "50 g",
     },
     {
       name: "Sugars",
-      quantity: "8.4 g",
+      quantity: "2 g",
     },
     {
       name: "Protein",
-      quantity: "7.9 g",
+      quantity: "18 g",
     },
   ],
+  ratings: [
+    {
+      userId: "64d5e9f2a8c7f914b041cd10",
+      rating: 5,
+      ratedAt: "2024-08-11T12:00:00Z",
+    },
+    {
+      userId: "64d5ea02a8c7f914b041cd12",
+      rating: 4,
+      ratedAt: "2024-08-10T15:30:00Z",
+    },
+  ],
+  comments: [
+    {
+      userId: "user2Id",
+      content: "This recipe is amazing!",
+      commentedAt: "2023-08-02T10:00:00Z",
+      replies: [
+        {
+          userId: "user3Id",
+          content: "I tried it too, and it was fantastic.",
+          commentedAt: "2023-08-02T11:00:00Z",
+          replies: [
+            {
+              userId: "user4Id",
+              content: "Thanks for the recommendation! Will try it tonight.",
+              commentedAt: "2023-08-02T12:00:00Z",
+              replies: [
+                {
+                  userId: "user4Id",
+                  content:
+                    "Thanks for the recommendation! Will try it tonight.",
+                  commentedAt: "2024-08-12T12:00:00Z",
+                  replies: [
+                    {
+                      userId: "user4Id",
+                      content:
+                        "Thanks for the recommendation! Will try it tonight.",
+                      commentedAt: "2023-08-02T12:00:00Z",
+                      replies: [
+                        {
+                          userId: "user4Id",
+                          content:
+                            "Thanks for the recommendation! Will try it tonight.",
+                          commentedAt: "2023-08-02T12:00:00Z",
+                          replies: [
+                            {
+                              userId: "user4Id",
+                              content:
+                                "Thanks for the recommendation! Will try it tonight.",
+                              commentedAt: "2023-08-02T12:00:00Z",
+                              replies: [],
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+    {
+      userId: "user5Id",
+      content: "I added some garlic, and it turned out great.",
+      commentedAt: "2023-08-03T14:00:00Z",
+      replies: [],
+    },
+  ],
+  authorId: "64d5edf2a8c7f914b041cd40",
+  createdAt: "2024-08-07T08:00:00Z",
+  updatedAt: "2024-08-09T12:00:00Z",
+  tags: ["Italian", "Pasta", "Quick Meal"],
+  imageURL:
+    "https://tarasmulticulturaltable.com/wp-content/uploads/2022/07/Classic-Spaghetti-Carbonara-4-of-4.jpg",
 };
 const ListItem = ({ count, text }: { count: number; text: string }) => {
   return (
@@ -156,23 +225,94 @@ const ListItem = ({ count, text }: { count: number; text: string }) => {
 };
 
 const Page = () => {
+  const componentRef = useRef();
+  const timeAgo = new TimeAgo("en-US");
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
+  const url = "a";
+  const text = "b";
+  const sharings = [
+    {
+      sitename: "Facebook",
+      icon: <FaFacebook size={25} />,
+      url: `https://facebook.com/sharer/sharer.php?u=${url}`,
+    },
+    {
+      sitename: "Twitter",
+      icon: <FaTwitter size={25} />,
+      url: `https://twitter.com/intent/tweet?url=a${url}&amp;text=${text}`,
+    },
+    {
+      sitename: "Linkedin",
+      icon: <FaFacebook size={25} />,
+      url: `https://www.linkedin.com/shareArticle?mini=true&amp;url=${url}&amp;title=${text}&amp;summary=${text}&amp;source=${url}`,
+    },
+    {
+      sitename: "Reddit",
+      icon: <FaReddit size={25} />,
+      url: `https://reddit.com/submit/?url=${url}&amp;resubmit=true&amp;title=${text}`,
+    },
+    {
+      sitename: "Whatsapp",
+      icon: <FaWhatsapp size={25} />,
+      url: `https://wa.me/?text=${text}%20${url}`,
+    },
+    {
+      sitename: "Telegram",
+      icon: <FaTelegram size={25} />,
+      url: `https://telegram.me/share/url?text=${text}&amp;url=a${url}`,
+    },
+    {
+      sitename: "Email",
+      icon: <IoMail size={25} />,
+      url: `mailto:?subject=${text}&amp;body=${url}`,
+    },
+  ];
   return (
     <main className="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white dark:bg-gray-900 antialiased">
       <div className="flex flex-col px-4 mx-auto max-w-screen-2xl ">
-        <article className="mx-auto w-full max-w-full md:max-w-3xl lg:max-w-4xl xl:max-w-5xl format format-sm sm:format-base lg:format-lg format-blue dark:format-invert">
+        <article
+          ref={componentRef}
+          className="mt-5 mx-auto w-full max-w-full md:max-w-3xl lg:max-w-4xl xl:max-w-5xl format format-sm sm:format-base lg:format-lg format-blue dark:format-invert"
+        >
           <header className="mb-4 lg:mb-6 not-format">
             <div className="flex justify-end items-center gap-5">
-              <IoShareOutline className="size-7" />
-              <IoBookmarkOutline className="size-7" />
+              <Dropdown>
+                <DropdownTrigger>
+                  <button>
+                    <IoShareOutline className="size-7" />
+                  </button>
+                </DropdownTrigger>
+                <DropdownMenu
+                  variant="faded"
+                  aria-label="Dropdown menu with icons"
+                >
+                  {sharings.map((sharing) => (
+                    <DropdownItem
+                      key={sharing.sitename}
+                      endContent={sharing.icon}
+                    >
+                      {sharing.sitename}
+                    </DropdownItem>
+                  ))}
+                </DropdownMenu>
+              </Dropdown>
+
+              <button>
+                <IoBookmarkOutline className="size-7" />
+              </button>
             </div>
 
             <h1 className="text-black font-manrope font-semibold text-3xl md:text-4xl lg:text-5xl leading-tight mb-8">
-              Strawberry Cream Cheesecake
+              {data.title}
             </h1>
 
             <div className="flex flex-wrap gap-7 mb-5 items-center">
               <div className="flex items-center gap-x-3">
-                <img
+                <Image
+                  width={20}
+                  height={20}
                   className="size-8 rounded-full"
                   src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=320&h=320&q=80"
                   alt="Avatar"
@@ -200,7 +340,7 @@ const Page = () => {
                 </svg>
                 <div>
                   <h5 className="text-sm text-gray-800 dark:text-neutral-200">
-                    Lauren Waller
+                    {timeAgo.format(new Date(data.createdAt))}
                   </h5>
                 </div>
               </div>
@@ -219,102 +359,48 @@ const Page = () => {
                     d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.076-4.076a1.526 1.526 0 0 1 1.037-.443 48.282 48.282 0 0 0 5.68-.494c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z"
                   />
                 </svg>
-
                 <div>
                   <h5 className="text-sm text-gray-800 dark:text-neutral-200">
-                    15
+                    {data.comments.length}
                   </h5>
                 </div>
               </div>
               <div className="flex items-center gap-x-1">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  className="size-6 text-yellow-500"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  className="size-6 text-yellow-500"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  className="size-6 text-yellow-500"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  className="size-6 text-yellow-500"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  className="size-6 text-yellow-500"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
-                    clipRule="evenodd"
-                  />
-                </svg>
+                <FaStar className="size-6 text-yellow-500" />
+                <FaStar className="size-6 text-yellow-500" />
+                <FaStar className="size-6 text-yellow-500" />
+                <FaStar className="size-6 text-yellow-500" />
               </div>
             </div>
           </header>
           <hr />
+          <p className="my-5 md:text-lg text-md">{data.description}</p>
           <figure className="mb-8">
-            <img
-              src="https://www.cubesnjuliennes.com/wp-content/uploads/2022/12/Tandoori-Chicken-Recipe-480x270.jpg"
+            <Image
+              height={200}
+              width={200}
+              src={data.imageURL}
               alt=""
               className="rounded-2xl w-full mt-6"
             />
-            <figcaption>Digital art by Anonymous</figcaption>
           </figure>
-          <div className="flex divide-x divide-gray-300">
-            <div className="px-4">
-              <p>PREP TIME</p>
+          <div className="flex justify-center divide-x divide-gray-300">
+            <div className="md:pr-8 pr-4">
+              <p className="font-light text-xs">PREP TIME</p>
               <p>15 min</p>
             </div>
-            <div className="px-4">
-              <p>PREP TIME</p>
+            <div className="md:px-8 px-4">
+              <p className="font-light text-xs">COOK TIME</p>
               <p>15 min</p>
             </div>
-            <div className="px-4">
-              <p>PREP TIME</p>
-              <p>15 min</p>
+            <div className="md:px-8 px-4">
+              <p className="font-light text-xs">SERVINGS</p>
+              <p>4 PEOPLE</p>
             </div>
-            <div className="px-4">
-              <p>PREP TIME</p>
-              <p>15 min</p>
+            <div className="md:px-8 px-4 flex">
+              <button className="hover:text-primary" onClick={handlePrint}>
+                <IoPrintOutline size={30} />
+              </button>
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 mt-5 gap-5">
@@ -334,7 +420,7 @@ const Page = () => {
                   Nutrition Facts
                 </h6>
                 <ul>
-                  {facts.nutritionFacts.map((nutrition, index) => (
+                  {data.nutritionFacts.map((nutrition, index) => (
                     <li
                       className={`text-body-color dark:text-dark-6 flex text-base items-center justify-between p-3 ${
                         index > 0 && "border-t-1 border-l-zinc-300"
@@ -355,7 +441,7 @@ const Page = () => {
 
               <div className="w-full">
                 <ol className="space-y-6">
-                  {steps.steps.map((step, index) => (
+                  {data.steps.map((step, index) => (
                     <ListItem
                       key={index}
                       count={step.stepNumber}
@@ -384,475 +470,10 @@ const Page = () => {
             <hr className="my-10" />
             <div>
               <div className=" mx-auto px-4">
-                <div className="overflow-x-scroll">
-                  <article className=" text-base bg-white rounded-lg dark:bg-gray-900">
-                    <footer className="flex justify-between items-center mb-2">
-                      <div className="flex items-center">
-                        <p className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold">
-                          <img
-                            className="mr-2 w-6 h-6 rounded-full"
-                            src="https://flowbite.com/docs/images/people/profile-picture-2.jpg"
-                            alt="Michael Gough"
-                          />
-                          Michael Gough
-                        </p>
-                        <p className="text-sm text-gray-600 dark:text-gray-400"></p>
-                      </div>
-                      <button
-                        id="dropdownComment1Button"
-                        data-dropdown-toggle="dropdownComment1"
-                        className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 dark:text-gray-400 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                        type="button"
-                      >
-                        <svg
-                          className="w-4 h-4"
-                          aria-hidden="true"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="currentColor"
-                          viewBox="0 0 16 3"
-                        >
-                          <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
-                        </svg>
-                        <span className="sr-only">Comment settings</span>
-                      </button>
-                      <div
-                        id="dropdownComment1"
-                        className="hidden z-10 w-36 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
-                      >
-                        <ul
-                          className="py-1 text-sm text-gray-700 dark:text-gray-200"
-                          aria-labelledby="dropdownMenuIconHorizontalButton"
-                        >
-                          <li>
-                            <a
-                              href="#"
-                              className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                            >
-                              Edit
-                            </a>
-                          </li>
-                          <li>
-                            <a
-                              href="#"
-                              className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                            >
-                              Remove
-                            </a>
-                          </li>
-                          <li>
-                            <a
-                              href="#"
-                              className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                            >
-                              Report
-                            </a>
-                          </li>
-                        </ul>
-                      </div>
-                    </footer>
-                    <p className="text-gray-500 dark:text-gray-400">
-                      Very straight-to-point article. Really worth time reading.
-                      Thank you! But tools are just the instruments for the UX
-                      designers. The knowledge of the design tools are as
-                      important as the creation of the design strategy.
-                    </p>
-                    <div className="flex items-center mt-4 space-x-4">
-                      <button
-                        type="button"
-                        className="flex items-center text-sm text-gray-500 hover:underline dark:text-gray-400 font-medium"
-                      >
-                        <svg
-                          className="mr-1.5 w-3.5 h-3.5"
-                          aria-hidden="true"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 20 18"
-                        >
-                          <path
-                            stroke="currentColor"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M5 5h5M5 8h2m6-3h2m-5 3h6m2-7H2a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h3v5l5-5h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z"
-                          />
-                        </svg>
-                        Reply
-                      </button>
-                    </div>
-                  </article>
-                  <article className="p-6 mb-3 ml-1 lg:ml-1 text-base bg-white rounded-lg dark:bg-gray-900">
-                    <footer className="flex justify-between items-center mb-2">
-                      <div className="flex items-center">
-                        <p className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold">
-                          <img
-                            className="mr-2 w-6 h-6 rounded-full"
-                            src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-                            alt="Jese Leos"
-                          />
-                          Jese Leos
-                        </p>
-                        <p className="text-sm text-gray-600 dark:text-gray-400"></p>
-                      </div>
-                      <button
-                        id="dropdownComment2Button"
-                        data-dropdown-toggle="dropdownComment2"
-                        className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 dark:text-gray-40 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                        type="button"
-                      >
-                        <svg
-                          className="w-4 h-4"
-                          aria-hidden="true"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="currentColor"
-                          viewBox="0 0 16 3"
-                        >
-                          <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
-                        </svg>
-                        <span className="sr-only">Comment settings</span>
-                      </button>
-
-                      <div
-                        id="dropdownComment2"
-                        className="hidden z-10 w-36 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
-                      >
-                        <ul
-                          className="py-1 text-sm text-gray-700 dark:text-gray-200"
-                          aria-labelledby="dropdownMenuIconHorizontalButton"
-                        >
-                          <li>
-                            <a
-                              href="#"
-                              className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                            >
-                              Edit
-                            </a>
-                          </li>
-                          <li>
-                            <a
-                              href="#"
-                              className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                            >
-                              Remove
-                            </a>
-                          </li>
-                          <li>
-                            <a
-                              href="#"
-                              className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                            >
-                              Report
-                            </a>
-                          </li>
-                        </ul>
-                      </div>
-                    </footer>
-                    <p className="text-gray-500 dark:text-gray-400">
-                      Much appreciated! Glad you liked it ☺️
-                    </p>
-                    <div className="flex items-center mt-4 space-x-4">
-                      <button
-                        type="button"
-                        className="flex items-center text-sm text-gray-500 hover:underline dark:text-gray-400 font-medium"
-                      >
-                        <svg
-                          className="mr-1.5 w-3.5 h-3.5"
-                          aria-hidden="true"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 20 18"
-                        >
-                          <path
-                            stroke="currentColor"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M5 5h5M5 8h2m6-3h2m-5 3h6m2-7H2a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h3v5l5-5h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z"
-                          />
-                        </svg>
-                        Reply
-                      </button>
-                    </div>
-                  </article>
-                  <article className="p-6 mb-3 ml-5 lg:ml-5 text-base bg-white rounded-lg dark:bg-gray-900">
-                    <footer className="flex justify-between items-center mb-2">
-                      <div className="flex items-center">
-                        <p className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold">
-                          <img
-                            className="mr-2 w-6 h-6 rounded-full"
-                            src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-                            alt="Jese Leos"
-                          />
-                          Jese Leos
-                        </p>
-                        <p className="text-sm text-gray-600 dark:text-gray-400"></p>
-                      </div>
-                      <button
-                        id="dropdownComment2Button"
-                        data-dropdown-toggle="dropdownComment2"
-                        className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 dark:text-gray-40 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                        type="button"
-                      >
-                        <svg
-                          className="w-4 h-4"
-                          aria-hidden="true"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="currentColor"
-                          viewBox="0 0 16 3"
-                        >
-                          <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
-                        </svg>
-                        <span className="sr-only">Comment settings</span>
-                      </button>
-
-                      <div
-                        id="dropdownComment2"
-                        className="hidden z-10 w-36 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
-                      >
-                        <ul
-                          className="py-1 text-sm text-gray-700 dark:text-gray-200"
-                          aria-labelledby="dropdownMenuIconHorizontalButton"
-                        >
-                          <li>
-                            <a
-                              href="#"
-                              className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                            >
-                              Edit
-                            </a>
-                          </li>
-                          <li>
-                            <a
-                              href="#"
-                              className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                            >
-                              Remove
-                            </a>
-                          </li>
-                          <li>
-                            <a
-                              href="#"
-                              className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                            >
-                              Report
-                            </a>
-                          </li>
-                        </ul>
-                      </div>
-                    </footer>
-                    <p className="text-gray-500 dark:text-gray-400">
-                      Much appreciated! Glad you liked it ☺️
-                    </p>
-                    <div className="flex items-center mt-4 space-x-4">
-                      <button
-                        type="button"
-                        className="flex items-center text-sm text-gray-500 hover:underline dark:text-gray-400 font-medium"
-                      >
-                        <svg
-                          className="mr-1.5 w-3.5 h-3.5"
-                          aria-hidden="true"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 20 18"
-                        >
-                          <path
-                            stroke="currentColor"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M5 5h5M5 8h2m6-3h2m-5 3h6m2-7H2a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h3v5l5-5h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z"
-                          />
-                        </svg>
-                        Reply
-                      </button>
-                    </div>
-                  </article>
-                  <article className="p-6 mb-3 text-base bg-white border-t border-gray-200 dark:border-gray-700 dark:bg-gray-900">
-                    <footer className="flex justify-between items-center mb-2">
-                      <div className="flex items-center">
-                        <p className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold">
-                          <img
-                            className="mr-2 w-6 h-6 rounded-full"
-                            src="https://flowbite.com/docs/images/people/profile-picture-3.jpg"
-                            alt="Bonnie Green"
-                          />
-                          Bonnie Green
-                        </p>
-                        <p className="text-sm text-gray-600 dark:text-gray-400"></p>
-                      </div>
-                      <button
-                        id="dropdownComment3Button"
-                        data-dropdown-toggle="dropdownComment3"
-                        className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 dark:text-gray-40 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                        type="button"
-                      >
-                        <svg
-                          className="w-4 h-4"
-                          aria-hidden="true"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="currentColor"
-                          viewBox="0 0 16 3"
-                        >
-                          <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
-                        </svg>
-                        <span className="sr-only">Comment settings</span>
-                      </button>
-                      <div
-                        id="dropdownComment3"
-                        className="hidden z-10 w-36 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
-                      >
-                        <ul
-                          className="py-1 text-sm text-gray-700 dark:text-gray-200"
-                          aria-labelledby="dropdownMenuIconHorizontalButton"
-                        >
-                          <li>
-                            <a
-                              href="#"
-                              className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                            >
-                              Edit
-                            </a>
-                          </li>
-                          <li>
-                            <a
-                              href="#"
-                              className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                            >
-                              Remove
-                            </a>
-                          </li>
-                          <li>
-                            <a
-                              href="#"
-                              className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                            >
-                              Report
-                            </a>
-                          </li>
-                        </ul>
-                      </div>
-                    </footer>
-                    <p className="text-gray-500 dark:text-gray-400">
-                      The article covers the essentials, challenges, myths and
-                      stages the UX designer should consider while creating the
-                      design strategy.
-                    </p>
-                    <div className="flex items-center mt-4 space-x-4">
-                      <button
-                        type="button"
-                        className="flex items-center text-sm text-gray-500 hover:underline dark:text-gray-400 font-medium"
-                      >
-                        <svg
-                          className="mr-1.5 w-3.5 h-3.5"
-                          aria-hidden="true"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 20 18"
-                        >
-                          <path
-                            stroke="currentColor"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M5 5h5M5 8h2m6-3h2m-5 3h6m2-7H2a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h3v5l5-5h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z"
-                          />
-                        </svg>
-                        Reply
-                      </button>
-                    </div>
-                  </article>
-                  <article className="p-6 text-base bg-white border-t border-gray-200 dark:border-gray-700 dark:bg-gray-900">
-                    <footer className="flex justify-between items-center mb-2">
-                      <div className="flex items-center">
-                        <p className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold">
-                          <img
-                            className="mr-2 w-6 h-6 rounded-full"
-                            src="https://flowbite.com/docs/images/people/profile-picture-4.jpg"
-                            alt="Helene Engels"
-                          />
-                          Helene Engels
-                        </p>
-                        <p className="text-sm text-gray-600 dark:text-gray-400"></p>
-                      </div>
-                      <button
-                        id="dropdownComment4Button"
-                        data-dropdown-toggle="dropdownComment4"
-                        className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 dark:text-gray-40 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                        type="button"
-                      >
-                        <svg
-                          className="w-4 h-4"
-                          aria-hidden="true"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="currentColor"
-                          viewBox="0 0 16 3"
-                        >
-                          <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
-                        </svg>
-                      </button>
-                      <div
-                        id="dropdownComment4"
-                        className="hidden z-10 w-36 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
-                      >
-                        <ul
-                          className="py-1 text-sm text-gray-700 dark:text-gray-200"
-                          aria-labelledby="dropdownMenuIconHorizontalButton"
-                        >
-                          <li>
-                            <a
-                              href="#"
-                              className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                            >
-                              Edit
-                            </a>
-                          </li>
-                          <li>
-                            <a
-                              href="#"
-                              className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                            >
-                              Remove
-                            </a>
-                          </li>
-                          <li>
-                            <a
-                              href="#"
-                              className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                            >
-                              Report
-                            </a>
-                          </li>
-                        </ul>
-                      </div>
-                    </footer>
-                    <p className="text-gray-500 dark:text-gray-400">
-                      Thanks for sharing this. I do came from the Backend
-                      development and explored some of the tools to design my
-                      Side Projects.
-                    </p>
-                    <div className="flex items-center mt-4 space-x-4">
-                      <button
-                        type="button"
-                        className="flex items-center text-sm text-gray-500 hover:underline dark:text-gray-400 font-medium"
-                      >
-                        <svg
-                          className="mr-1.5 w-3.5 h-3.5"
-                          aria-hidden="true"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 20 18"
-                        >
-                          <path
-                            stroke="currentColor"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M5 5h5M5 8h2m6-3h2m-5 3h6m2-7H2a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h3v5l5-5h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z"
-                          />
-                        </svg>
-                        Reply
-                      </button>
-                    </div>
-                  </article>
+                <div className="w-full overflow-x-scroll">
+                  {data.comments.map((comment, index) => (
+                    <Comments key={index} comment={comment} />
+                  ))}
                 </div>
 
                 <button className="border-1 border-black rounded-lg w-full px-10 py-3 hover:bg-black hover:text-white transition-all delay-100 font-medium md:text-lg text-sm">

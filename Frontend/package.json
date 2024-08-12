@@ -12,10 +12,12 @@
     "@nextui-org/react": "^2.4.6",
     "autoprefixer": "^10.4.20",
     "framer-motion": "^11.3.24",
+    "javascript-time-ago": "^2.5.10",
     "next": "14.2.5",
     "react": "^18",
     "react-dom": "^18",
-    "react-icons": "^5.2.1"
+    "react-icons": "^5.2.1",
+    "react-to-print": "^2.15.1"
   },
   "devDependencies": {
     "@types/node": "^20",
