@@ -43,9 +43,10 @@ const Page = () => {
       <div
         className="relative mx-auto px-4 pt-28 sm:max-w-xl md:max-w-full md:px-8 lg:py-60 xl:px-20"
         style={{
-          backgroundImage: 'url("/images/home_recipes.jpg")',
+          backgroundImage: 'url("/images/home_recipes1.png")',
           backgroundRepeat: "no-repeat",
-          backgroundPosition: "center top",
+          backgroundPosition: "top right",
+          backgroundSize: '100%',
         }}
       >
         <div className="mx-auto max-w-xl lg:max-w-screen-xl">
@@ -54,16 +55,16 @@ const Page = () => {
               {/* <div>
             <p className="bg-teal-accent-400 mb-4 inline-block rounded-full bg-green-200 px-3 py-px text-sm font-semibold tracking-wider text-green-900">This is Flippy</p>
           </div> */}
-              <h2 className="mb-6 max-w-lg font-sans  font-bold tracking-tight text-textPrimary text-5xl sm:leading-snug">
+              <h2 className="mb-6 max-w-lg font-sans  font-bold tracking-tight text-textPrimary text-5xl sm:leading-snug dark:text-white">
                 Your Daily Dish <br />A{" "}
                 <span className="inline-block text-primary">Food</span> Journey
               </h2>
-              <p className="text-base text-gray-700 md:text-lg">
+              <p className="text-base text-gray-700 md:text-lg dark:text-gray-400">
                 Embark on a Culinary Adventure: Discover, Create, and Savor
                 Mouthwatering Recipes from Around the Globe
               </p>
             </div>
-            <div className="flex flex-row items-center justify-center  sm:flex-row sm:space-y-0 space-x-2 lg:justify-start">
+            <div className="flex flex-row items-center justify-center  sm:flex-row sm:space-y-0 space-x-2 lg:justify-start pb-10">
               <Link
                 href="/auth/register"
                 className="inline-flex h-12 w-full items-center justify-center rounded-full bg-primary px-10 font-medium tracking-wide text-white shadow-md outline-none transition duration-200 hover:bg-green-400 focus:ring sm:w-auto"
@@ -437,7 +438,7 @@ const Page = () => {
                 <div>
                   <button
                     type="submit"
-                    className="py-3 px-5 w-full text-sm font-medium text-center text-white rounded-lg border cursor-pointer bg-primary border-primary sm:rounded-none sm:rounded-r-lg hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                    className="py-3 px-5 w-full text-sm font-medium text-center text-white rounded-lg border cursor-pointer bg-primary border-primary sm:rounded-none sm:rounded-r-lg hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary dark:hover:bg-primary-700 dark:focus:ring-primary-800"
                   >
                     Subscribe
                   </button>

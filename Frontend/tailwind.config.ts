@@ -12,6 +12,8 @@ const config: Config = {
     extend: {
       backgroundImage: {
         'hero-background': "url('/images/home_recipes.jpg')",
+        'login-backgroud': "url('/images/login.webp')",
+        'register-backgroud': "url('/images/register.webp')",
         'footer-texture': "url('/img/footer-texture.png')",
       },
       colors: {
@@ -26,6 +28,7 @@ const config: Config = {
     },
 
   },
+  darkMode: "class",
   plugins: [nextui()]
 };
 export default config;

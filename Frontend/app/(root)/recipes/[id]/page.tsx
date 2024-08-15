@@ -225,10 +225,10 @@ const ListItem = ({ count, text }: { count: number; text: string }) => {
 };
 
 const Page = () => {
-  const componentRef = useRef();
+  const componentRef = useRef<HTMLElement>(null);
   const timeAgo = new TimeAgo("en-US");
   const handlePrint = useReactToPrint({
-    content: () => componentRef.current,
+    content: () => componentRef.current || null,
   });
   const url = "a";
   const text = "b";
@@ -273,7 +273,7 @@ const Page = () => {
     <main className="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white dark:bg-gray-900 antialiased">
       <div className="flex flex-col px-4 mx-auto max-w-screen-2xl ">
         <article
-          ref={componentRef}
+          ref={componentRef || null}
           className="mt-5 mx-auto w-full max-w-full md:max-w-3xl lg:max-w-4xl xl:max-w-5xl format format-sm sm:format-base lg:format-lg format-blue dark:format-invert"
         >
           <header className="mb-4 lg:mb-6 not-format">
