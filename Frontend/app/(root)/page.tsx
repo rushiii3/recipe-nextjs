@@ -43,10 +43,9 @@ const Page = () => {
       <div
         className="relative mx-auto px-4 pt-28 sm:max-w-xl md:max-w-full md:px-8 lg:py-60 xl:px-20"
         style={{
-          backgroundImage: 'url("/images/home_recipes1.png")',
+          backgroundImage: 'url("/images/home_recipes.jpg")',
           backgroundRepeat: "no-repeat",
-          backgroundPosition: "top right",
-          backgroundSize: '100%',
+          backgroundPosition: "center top",
         }}
       >
         <div className="mx-auto max-w-xl lg:max-w-screen-xl">

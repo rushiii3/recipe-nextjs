@@ -270,7 +270,7 @@ const Page = () => {
     },
   ];
   return (
-    <main className="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white dark:bg-gray-900 antialiased">
+    <main className="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white antialiased">
       <div className="flex flex-col px-4 mx-auto max-w-screen-2xl ">
         <article
           ref={componentRef || null}
