@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import Providers from "@/Providers";
 const inter = Inter({ subsets: ["latin"] });
+import { Toaster } from 'react-hot-toast';
 
 export const metadata: Metadata = {
   title: "FindDelish",
@@ -16,7 +18,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} dark:bg-gray-900`}>{children}</body>
+      <body className={`${inter.className} dark:bg-gray-900`}>
+        <Providers>
+          {children}
+        </Providers>
+        <Toaster />
+      </body>
     </html>
   );
 }

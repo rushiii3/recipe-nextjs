@@ -1,3 +1,4 @@
+import { Input } from "@nextui-org/react";
 import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next/types";
@@ -30,30 +31,32 @@ const Page = () => {
             Sign in to your account below.
           </p>
 
-          <form className="flex flex-col items-stretch pt-3 md:pt-8">
-            <div className="flex flex-col pt-4">
-              <div className="relative flex overflow-hidden rounded-md border-2 transition focus-within:border-blue-600">
-                <input
-                  type="email"
-                  id="login-email"
-                  className="w-full flex-shrink appearance-none border-gray-300 bg-white py-2 px-4 text-base text-gray-700 placeholder-gray-400 focus:outline-none"
-                  placeholder="Email"
-                />
-              </div>
-            </div>
-            <div className="mb-4 flex flex-col pt-4">
-              <div className="relative flex overflow-hidden rounded-md border-2 transition focus-within:border-blue-600">
-                <input
-                  type="password"
-                  id="login-password"
-                  className="w-full flex-shrink appearance-none border-gray-300 bg-white py-2 px-4 text-base text-gray-700 placeholder-gray-400 focus:outline-none"
-                  placeholder="Password"
-                />
-              </div>
-            </div>
+          <form className="flex flex-col items-stretch w-full pt-3 md:pt-8 gap-5">
+          <Input
+              type="email"
+              variant={"bordered"}
+              label="Email or username"
+              required
+              name="email"
+              radius="sm"
+              labelPlacement="outside"
+              placeholder="Your email"
+              isClearable
+            />
+            <Input
+              type="text"
+              variant={"bordered"}
+              label="Password"
+              required
+              name="fullname"
+              radius="sm"
+              labelPlacement="outside"
+              placeholder="Your fullname"
+              isClearable
+            />
             <a
               href="#"
-              className="mb-6 text-center text-sm font-medium text-gray-600 md:text-left"
+              className=" text-center ms-auto text-sm font-medium text-gray-600 md:text-left"
             >
               Forgot password?
             </a>

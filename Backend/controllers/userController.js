@@ -29,13 +29,11 @@ const register = asyncHandler(async (req, res, next) => {
       ThrowError("Email already exits!", 400);
     }
     const hashpassword = await bcrypt.hashSync(password, salt);
-    const filePath = req.file.path;
     const user = {
       username,
       email,
       hashpassword,
       fullname,
-      filePath,
     };
     const token = await jwt.sign(user, `${process.env.jwt_token}`, {
       expiresIn: "10m",
@@ -69,7 +67,6 @@ const verifyToken = asyncHandler(async (req, res, next) => {
       fullname: userData.fullname,
       email: userData.fullname,
       password: userData.hashpassword,
-      profileImageURL: userData.filePath,
     });
     const saveUser = await user.save();
     if (!saveUser) {
