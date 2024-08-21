@@ -74,7 +74,7 @@ const Page = () => {
     },
     onError: (error, variables, context) => {
       // Update the toast to show error
-      toast.error(`Sign up failed: ${error.message}`, { id: context.toastId });
+      toast.error(`Sign up failed: ${error.message}`, { id: context?.toastId });
     },
   });
 
