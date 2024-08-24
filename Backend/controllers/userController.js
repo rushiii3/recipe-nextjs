@@ -58,6 +58,7 @@ const verifyToken = asyncHandler(async (req, res, next) => {
     if (!userData) {
       ThrowError("Invalid Activation Token", 400);
     }
+    console.log(userData);
     const alreadyUser = await User.findOne({ email: userData.email });
     if (alreadyUser) {
         ThrowError("User already exits", 400);
@@ -65,7 +66,7 @@ const verifyToken = asyncHandler(async (req, res, next) => {
     const user = new User({
       username: userData.username,
       fullname: userData.fullname,
-      email: userData.fullname,
+      email: userData.email,
       password: userData.hashpassword,
     });
     const saveUser = await user.save();
@@ -84,7 +85,45 @@ const verifyToken = asyncHandler(async (req, res, next) => {
     ThrowError("Invalid Activation Token", 400);
   }
 });
+const login  = asyncHandler(async(req,res,next) => {
+  try {
+    const {email, password} = req.body; 
+
+    if (!email) {
+      ThrowError("Username or email is required", 400);
+    }
+    if (!password) {
+      ThrowError("Password is required", 400);
+    }
+    const user = await User.findOne({email:email});
+    if (!user) {
+      ThrowError("Invalid email", 400);
+    }
+    const isValidPassword = await bcrypt.compare(password, user.password);
+    if (!isValidPassword) {
+      ThrowError("Invalid Password", 400);
+    }
+    const token = jwt.sign(
+      JSON.stringify(user),
+      process.env.jwt_token
+    );
+    const options = {
+      expires: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000),
+      httpOnly: true,
+      sameSite: "none",
+      secure: true,
+    };
+    res.status(201).cookie("token", token, options).json({
+      message: `Login successfully!`,
+      status: true,
+    });
+    console.log(user);
+  } catch (error) {
+    next(error);
+  }
+})
 module.exports = {
   register,
   verifyToken,
+  login
 };

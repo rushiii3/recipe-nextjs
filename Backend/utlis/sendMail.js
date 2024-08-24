@@ -13,7 +13,7 @@ const sendMail = async (email, fullname, token) => {
     from: process.env.SMTP_MAIL,
     to: email,
     Subject: "Activate Your Rent Me Account to Start Renting Your Dream Home!",
-    html: `<b>Hello world? ${fullname} <a href='${token}'>Click to verify</a> </b>`, // html body
+    html: `<b>Hello world? ${fullname} <a href='http://localhost:3000/auth/verify/${token}'>Click to verify</a> </b>`, // html body
   };
   await transporter.sendMail(mailOptions);
 };

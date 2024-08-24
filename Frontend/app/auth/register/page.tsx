@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import axios from "axios";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import toast from 'react-hot-toast';
 const SignUpSchema = z
   .object({
@@ -74,7 +74,7 @@ const Page = () => {
     },
     onError: (error, variables, context) => {
       // Update the toast to show error
-      toast.error(`Sign up failed: ${error.message}`, { id: context?.toastId });
+      toast.error(error?.response?.data?.message, { id: context?.toastId });
     },
   });
 
