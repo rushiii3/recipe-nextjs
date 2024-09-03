@@ -6,6 +6,14 @@ import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en";
 TimeAgo.addDefaultLocale(en);
 
+type RecipeCardProps = {
+  title: string;
+  rating: number;
+  image: string;
+  postedBy: string;
+  postedDate: string;
+  userProfileImage: string;
+};
 const RecipeCard = ({
   title,
   rating,
@@ -13,7 +21,7 @@ const RecipeCard = ({
   postedBy,
   postedDate,
   userProfileImage,
-}) => {
+}: RecipeCardProps) => {
   const timeAgo = new TimeAgo("en-US");
 
   return (

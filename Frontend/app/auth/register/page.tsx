@@ -7,7 +7,7 @@ import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useMutation } from "@tanstack/react-query";
 import toast from 'react-hot-toast';
 const SignUpSchema = z
@@ -72,9 +72,10 @@ const Page = () => {
       console.log(data);
       toast.success('Sign up successful!', { id: context.toastId });
     },
-    onError: (error, variables, context) => {
+    onError: (error:AxiosError, variables, context) => {
       // Update the toast to show error
-      toast.error(error?.response?.data?.message, { id: context?.toastId });
+      const errorMessage = (error?.response?.data as { message: string })?.message;
+      toast.error(errorMessage, { id: context?.toastId });
     },
   });
 

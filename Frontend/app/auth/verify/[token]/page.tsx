@@ -1,6 +1,6 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useParams } from "next/navigation";
 import React from "react";
 const fetchTokenStatus = async (token: string) => {
@@ -9,13 +9,22 @@ const fetchTokenStatus = async (token: string) => {
   );
   return response.data;
 };
+interface DataResponse {
+  message: string;
+  // other fields you expect in data
+}
+
+interface ErrorResponse {
+  message: string;
+  // other fields you expect in error response
+}
 const Page = () => {
   const { token }:{token:string} = useParams();
 
-  const { data, error, isLoading } = useQuery({
+  const { data, error, isLoading } = useQuery<DataResponse, AxiosError<ErrorResponse>>({
     queryKey: ["token", token],
     queryFn: () => fetchTokenStatus(token),
-    enabled: !!token, // Ensures the query runs only if token is truthy
+    enabled: !!token,
     retry: false,
   });
   return (

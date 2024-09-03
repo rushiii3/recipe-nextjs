@@ -85,7 +85,7 @@ const recipes = [
 ];
 
 const TrendingRecipe = () => {
-  const carouselRef = useRef(null);
+  const carouselRef = useRef<HTMLDivElement>(null);
   const scrollByAmount = (amount: number) => {
     if (carouselRef.current) {
       carouselRef?.current?.scrollBy({ left: amount, behavior: "smooth" });
@@ -93,11 +93,17 @@ const TrendingRecipe = () => {
   };
 
   const scrollLeft = () => {
-    scrollByAmount(-carouselRef?.current?.clientWidth);
+    if (carouselRef.current) {
+      const width = carouselRef.current.clientWidth ?? 0;
+      scrollByAmount(-width);
+    }
   };
-
+  
   const scrollRight = () => {
-    scrollByAmount(carouselRef?.current?.clientWidth);
+    if (carouselRef.current) {
+      const width = carouselRef.current.clientWidth ?? 0;
+      scrollByAmount(width);
+    }
   };
   return (
     <section className="py-12">
