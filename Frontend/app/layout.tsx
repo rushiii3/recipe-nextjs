@@ -4,6 +4,7 @@ import "./globals.css";
 import Providers from "@/Providers";
 const inter = Inter({ subsets: ["latin"] });
 import { Toaster } from 'react-hot-toast';
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "FindDelish",

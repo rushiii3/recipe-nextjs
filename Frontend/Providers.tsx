@@ -7,6 +7,8 @@ import {
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
+import { ReactLenis } from "@studio-freight/react-lenis";
+import NextTopLoader from "nextjs-toploader";
 
 function makeQueryClient() {
   return new QueryClient({
@@ -44,6 +46,22 @@ export default function Providers({ children }: { children: React.ReactNode }) {
   const queryClient = getQueryClient();
 
   return (
-    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    <QueryClientProvider client={queryClient}>
+      <NextTopLoader
+        color="#FF6F61"
+        initialPosition={0.08}
+        crawlSpeed={200}
+        height={5}
+        crawl={true}
+        easing="ease"
+        speed={200}
+        shadow="0 0 10px #2299DD,0 0 5px #2299DD"
+        zIndex={1600}
+        showAtBottom={false}
+      />
+      <ReactLenis options={{ duration: 1 }}  root>
+        {children}
+      </ReactLenis>
+    </QueryClientProvider>
   );
 }

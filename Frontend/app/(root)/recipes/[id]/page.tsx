@@ -21,7 +21,6 @@ import {
 } from "@nextui-org/react";
 import {
   FaFacebook,
-  FaTumblr,
   FaReddit,
   FaWhatsapp,
   FaTelegram,
@@ -215,7 +214,7 @@ const data = {
 };
 const ListItem = ({ count, text }: { count: number; text: string }) => {
   return (
-    <li className="text-body-color dark:text-dark-6 flex text-base text-large">
+    <li className="text-body-color dark:text-dark-6 flex text-large">
       <span className="bg-primary mr-2.5 flex h-[26px] w-full max-w-[26px] items-center justify-center rounded-full text-base text-white">
         {count}
       </span>
