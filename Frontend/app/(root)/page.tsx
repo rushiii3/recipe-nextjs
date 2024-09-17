@@ -3,12 +3,11 @@ import SignUpNewsletter from "@/components/SignUpNewsletter";
 import TrendingRecipe from "@/components/TrendingRecipe";
 import Link from "next/link";
 import React from "react";
-
 const Page = () => {
   return (
     <>
       <div
-        className="relative mx-auto px-4 pt-28 sm:max-w-xl md:max-w-full md:px-8 lg:py-60 xl:px-20"
+        className="relative mx-auto px-4 pt-40  md:px-8 lg:py-60 xl:px-20"
         style={{
           backgroundImage: 'url("/images/home_recipes.jpg")',
           backgroundRepeat: "no-repeat",
@@ -71,14 +70,14 @@ const Page = () => {
                 aspernatur quam mollitia.
               </p>
 
-              <a
-                href="https://tailus.io/contact"
+              <Link
+                href={'auth/register'}
                 className="relative flex h-12 w-full items-center justify-center px-8 before:absolute before:inset-0 before:rounded-full before:bg-sky-100 before:bg-gradient-to-b before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 dark:before:border-gray-700 dark:before:bg-gray-800 sm:w-max"
               >
                 <span className="relative text-base font-semibold text-sky-600 dark:text-white">
                   Register now
                 </span>
-              </a>
+              </Link>
             </div>
           </div>
         </div>
